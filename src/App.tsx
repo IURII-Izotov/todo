@@ -36,6 +36,7 @@ function App() {
 
 
     function addTask(title:string){
+
         let newTask = {id: v1(), title: title, isDone: false};
         setTasks([newTask, ...tasks]);
     }
@@ -59,6 +60,7 @@ function App() {
                       title={'hello'}
                       tasks={tasksForToDoList}
                       changeFilter={changeFilter}
+                      filter={filter}
             />
 
         </div>
