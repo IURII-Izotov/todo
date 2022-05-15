@@ -6,3 +6,9 @@
 .App > div {
   margin-right: 50px;
 }
+.border-error{
+  border: 1px solid #b30404;
+}
+.error{
+  color:#b30404;
+}
