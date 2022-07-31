@@ -1,4 +1,4 @@
-import {changeFilterType, todoListsType} from "../App";
+import {changeFilterType, TodolistType} from "../AppWithRedux";
 import {v1} from "uuid";
 
 export type RemoveToDoListActionType = {
@@ -7,7 +7,8 @@ export type RemoveToDoListActionType = {
 }
 export type AddToDoListActionType = {
     type:'ADD-TODOLIST',
-    title:string
+    title:string,
+    todolistId:string
 }
 export type ChangeToDoListTitleActionType = {
     type:'CHANGE-TODOLIST-TITLE',
@@ -22,15 +23,21 @@ export type ChangeToDoListFilterActionType = {
 
 type ActionsType = RemoveToDoListActionType|AddToDoListActionType|
     ChangeToDoListTitleActionType|ChangeToDoListFilterActionType
+export let toDoList1 = v1();
+export let toDoList2 = v1();
+const initialStateToDoLists:Array<TodolistType> = [
+    {id: toDoList1, title: 'hello', filter: 'active'},
+    {id: toDoList2, title: 'hi', filter: 'completed'}
+]
+export const todolistsReducer = (state: Array<TodolistType>= initialStateToDoLists, action:ActionsType ):Array<TodolistType>=> {
 
-export const toDoListsReducer = (state: todoListsType[], action:ActionsType )=> {
     switch (action.type){
         case 'REMOVE-TODOLIST':
            return state.filter(({id})=>{
                 return id !== action.id
             });
         case 'ADD-TODOLIST':
-            return [...state,{id: v1(), title: action.title, filter: 'all'}]
+            return [{id: action.todolistId, title: action.title, filter: 'all'},...state]
         case 'CHANGE-TODOLIST-TITLE':
             let findToDoList=state.find(tl => tl.id == action.id)
             if (findToDoList){
@@ -44,14 +51,14 @@ export const toDoListsReducer = (state: todoListsType[], action:ActionsType )=> 
             }
             return [...state]
         default:
-            throw new Error("I don't understand this action type")
+            return state
     }
 }
-export const removeToDoListAC = (toDoListId:string) : RemoveToDoListActionType=>{
+export const removeTodolistAC = (toDoListId:string) : RemoveToDoListActionType=>{
 return {type: 'REMOVE-TODOLIST', id: toDoListId}
 }
-export const addToDoListAC = (newTodolistTitle:string) : AddToDoListActionType=>{
-    return {type: 'ADD-TODOLIST', title: newTodolistTitle}
+export const addTodolistAC = (newTodolistTitle:string) : AddToDoListActionType=>{
+    return {type: 'ADD-TODOLIST', title: newTodolistTitle, todolistId: v1()}
 }
 export const changeToDoListTitleAC = (toDoListId:string,toDoListTitle:string) : ChangeToDoListTitleActionType=>{
     return {
