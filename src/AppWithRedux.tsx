@@ -1,16 +1,15 @@
-import React, {Reducer, useReducer, useState} from 'react';
+import React, {useCallback} from 'react';
 import './App.css';
 import {TaskType, ToDoList} from './ToDoList'
-import {v1} from "uuid";
 import {AddItemForm} from "./AddItemForm";
 import {
     addTodolistAC,
     changeToDoListFilterAC,
     changeToDoListTitleAC,
-    removeTodolistAC, toDoList1, toDoList2,
-    todolistsReducer
+    removeTodolistAC
+
 } from "./state/todolists-reduser";
-import {addTaskAC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC, tasksReducer} from "./state/tasks-reduser";
+
 import {useDispatch, useSelector} from "react-redux";
 import {appRootState} from "./state/store";
 
@@ -25,7 +24,7 @@ export type TasksStateType = {
     [key:string]:TaskType[]
 }
 export function AppWithRedux() {
-
+    console.log('App')
     const dispatch = useDispatch()
     const todoListsArray = useSelector<appRootState, Array<TodolistType>>(state => state.toDoLists)
 
@@ -62,25 +61,17 @@ export function AppWithRedux() {
         dispatch(action);
 
     }
-    function addNewToDoList(title:string) {
+    const addNewToDoList=useCallback((title:string)=>{
         let action = addTodolistAC(title)
         dispatch(action);
-    }
+    },[])
 
     return (
         <div className="App">
             <AddItemForm addItem={addNewToDoList}/>
+            <div className='tasks-wrapper'>
             {
                 todoListsArray.map((tl) => {
-                    // let tasksForToDoList = tasksObj[tl.id];
-                    //
-                    // if (tl.filter === 'active') {
-                    //     tasksForToDoList = tasksForToDoList.filter((task) => task.isDone)
-                    // }
-                    // if (tl.filter === 'completed') {
-                    //     tasksForToDoList = tasksForToDoList.filter((task) => !task.isDone)
-                    // }
-
                     return <ToDoList
                         key={tl.id}
                         id={tl.id}
@@ -92,7 +83,7 @@ export function AppWithRedux() {
                     />
                 })
             }
-
+            </div>
 
         </div>
     );

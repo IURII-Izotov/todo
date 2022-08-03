@@ -1,9 +1,8 @@
 .App {
   padding: 30px;
   display: flex;
-  flex-direction: row;
-  justify-content: space-around;
-  flex-wrap: wrap;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .App > div {
@@ -20,4 +19,18 @@
 }
 .is-done{
   opacity: 0.5;
+}
+.tasks-wrapper{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  flex-wrap: wrap;
+}
+.universalInput{
+  display: flex;
+ flex-direction: row;
+  justify-content: center;
+}
+.red{
+  border-color: red;
 }

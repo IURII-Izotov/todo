@@ -6,11 +6,12 @@ type AddItemForm={
     addItem:(title:string)=> void
 }
 
-export const AddItemForm = (props:AddItemForm) => {
+export const AddItemForm = React.memo((props:AddItemForm) => {
+    console.log('Инпут добавления тудулиста')
     let [title, setTitle] = useState('')
-    let [error,setError] =useState<string>('');
+    let [error,setError] =useState<string | null>('');
     let errorText= 'Title is require'
-    let addItem = ()=> {
+    const addItem = ()=> {
         if(title.trim() === ''){
             setError(errorText)
             return
@@ -18,18 +19,23 @@ export const AddItemForm = (props:AddItemForm) => {
         props.addItem(title.trim());
         setTitle('')
     }
-    let onChangeInputHandler = (event: ChangeEvent<HTMLInputElement>) => {
-        setError('');
+    const onChangeInputHandler = (event: ChangeEvent<HTMLInputElement>) => {
+        if( error !== null){
+            setError(null);
+        }
+
         setTitle(event.currentTarget.value);
     }
-    let onKeyPressHandler = (event: React.KeyboardEvent<HTMLInputElement>)=>{
-        setError('');
+    const onKeyPressHandler = (event: React.KeyboardEvent<HTMLInputElement>)=>{
+        setError(null);
         if(event.key === "Enter"){
             addItem();
         }
     }
+
     return (
         <div className='universalInput'>
+
             <TextField value={title}
                        onKeyPress={onKeyPressHandler}
                        onChange={onChangeInputHandler}
@@ -38,12 +44,13 @@ export const AddItemForm = (props:AddItemForm) => {
                        variant="outlined"
                        error={!!error}
                        helperText={error}
-            />
 
+            />
             <IconButton onClick={addItem}  color={"primary"}>
                 <AddCircleIcon/>
             </IconButton>
         </div>
     );
-};
+}
+);
 

@@ -49,10 +49,10 @@ export let ToDoList = (props: ToDoListPropsType) => {
     let tasksForToDoList = tasksObj;
 
     if (props.filter === 'active') {
-        tasksForToDoList = tasksForToDoList.filter((task) => task.isDone)
+        tasksForToDoList = tasksForToDoList.filter((task) => !task.isDone)
     }
     if (props.filter === 'completed') {
-        tasksForToDoList = tasksForToDoList.filter((task) => !task.isDone)
+        tasksForToDoList = tasksForToDoList.filter((task) => task.isDone)
     }
 
     return (

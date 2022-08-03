@@ -61,7 +61,6 @@ export const tasksReducer = (state: TasksStateType = initialStateTasks, action:A
             let copyState = {...state};
             let tasks = state[action.toDoListId];
             copyState[action.toDoListId] = tasks.map((t) =>{
-                console.log(t.id)
                if(t.id == action.taskID){
                    return {...t,isDone:action.status}
                }
