@@ -1,39 +1,29 @@
-import React, {ChangeEvent, useState} from "react";
-import {IconButton, TextField} from "@mui/material";
-import CheckIcon from '@mui/icons-material/Check';
+import React, {ChangeEvent, useState} from 'react';
+import {TextField} from '@material-ui/core';
+
 type EditableSpanPropsType = {
-    title: string,
-    onChange:(newValue:string)=> void
+    value: string
+    onChange: (newValue: string) => void
 }
 
-export function EditableSpan(props: EditableSpanPropsType) {
-   let [editMode,setEditMode] = useState(false)
-    let [title,setTitle] = useState('')
-    let activateEditMode=()=>{
-        setEditMode(true);
-        setTitle(props.title);
+export const EditableSpan = React.memo(function(props: EditableSpanPropsType) {
+    console.log("EditableSpan");
+    let [editMode, setEditMode] = useState(false);
+    let [title, setTitle] = useState(props.value);
 
+    const activateEditMode = () => {
+        setEditMode(true);
+        setTitle(props.value);
     }
-    let activateViewMode=()=>{
+    const activateViewMode = () => {
         setEditMode(false);
         props.onChange(title);
     }
-    let onChangeTitleHandler = (e:ChangeEvent<HTMLInputElement>)=>{
-        setTitle(e.currentTarget.value);
-
+    const changeTitle = (e: ChangeEvent<HTMLInputElement>) => {
+        setTitle(e.currentTarget.value)
     }
-    let onClickButtonInput = ()=>{
-        setTitle(title);
 
-    }
-    return editMode?
-        <>
-            <TextField onChange={onChangeTitleHandler} value={title} onBlur={activateViewMode} id="outlined-basic" label="Text" variant="outlined" autoFocus/>
-            <IconButton onClick={onClickButtonInput}>
-                <CheckIcon color={"success"}/>
-            </IconButton>
-        </>
-    :
-    <span onDoubleClick={activateEditMode} >{props.title}</span>
-
-}
+    return editMode
+        ?    <TextField value={title} onChange={changeTitle} autoFocus onBlur={activateViewMode} />
+        : <span onDoubleClick={activateEditMode}>{props.value}</span>
+})

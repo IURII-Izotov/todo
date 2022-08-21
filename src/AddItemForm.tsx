@@ -1,56 +1,49 @@
-import React, {ChangeEvent, useState} from 'react';
-import {IconButton, TextField} from "@mui/material";
-import AddCircleIcon from '@mui/icons-material/AddCircle';
+import React, {ChangeEvent, KeyboardEvent, useState} from 'react';
+import {Box, Button, FormControl, IconButton, TextField} from '@material-ui/core';
+import {AddBox} from '@material-ui/icons';
 
-type AddItemForm={
-    addItem:(title:string)=> void
+type AddItemFormPropsType = {
+    addItem: (title: string) => void
 }
 
-export const AddItemForm = React.memo((props:AddItemForm) => {
-    console.log('Инпут добавления тудулиста')
-    let [title, setTitle] = useState('')
-    let [error,setError] =useState<string | null>('');
-    let errorText= 'Title is require'
-    const addItem = ()=> {
-        if(title.trim() === ''){
-            setError(errorText)
-            return
+export const AddItemForm = React.memo( (props: AddItemFormPropsType) => {
+    console.log("AddItemForm is called")
+    let [title, setTitle] = useState("")
+    let [error, setError] = useState<string | null>(null)
+
+    const addItem = () => {
+        if (title.trim() !== "") {
+            props.addItem(title);
+            setTitle("");
+        } else {
+            setError("Title is required");
         }
-        props.addItem(title.trim());
-        setTitle('')
     }
-    const onChangeInputHandler = (event: ChangeEvent<HTMLInputElement>) => {
-        if( error !== null){
+
+    const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
+        setTitle(e.currentTarget.value)
+    }
+
+    const onKeyPressHandler = (e: KeyboardEvent<HTMLInputElement>) => {
+        if (error !== null) {
             setError(null);
         }
-
-        setTitle(event.currentTarget.value);
-    }
-    const onKeyPressHandler = (event: React.KeyboardEvent<HTMLInputElement>)=>{
-        setError(null);
-        if(event.key === "Enter"){
+        if (e.charCode === 13) {
             addItem();
         }
     }
 
-    return (
-        <div className='universalInput'>
-
-            <TextField value={title}
-                       onKeyPress={onKeyPressHandler}
-                       onChange={onChangeInputHandler}
-                       id="outlined-basic"
-                       label="Type value"
-                       variant="outlined"
-                       error={!!error}
-                       helperText={error}
-
-            />
-            <IconButton onClick={addItem}  color={"primary"}>
-                <AddCircleIcon/>
-            </IconButton>
-        </div>
-    );
-}
-);
-
+    return <div>
+        <TextField variant="outlined"
+                   error={!!error}
+                   value={title}
+                   onChange={onChangeHandler}
+                   onKeyPress={onKeyPressHandler}
+                   label="Title"
+                   helperText={error}
+        />
+        <IconButton color="primary" onClick={addItem}>
+            <AddBox />
+        </IconButton>
+    </div>
+} );

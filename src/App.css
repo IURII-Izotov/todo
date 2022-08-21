@@ -1,36 +1,26 @@
+/*
 .App {
   padding: 30px;
   display: flex;
-  flex-direction: column;
-  justify-content: center;
 }
 
 .App > div {
   margin-right: 50px;
 }
-.border-error{
-  border: 1px solid #b30404;
+
+.error {
+  border: red 1px solid;
 }
-.error{
-  color:#b30404;
+
+.error-message {
+  color: red;
 }
-.active-filter{
+
+.active-filter {
   background-color: aquamarine;
 }
-.is-done{
+
+.is-done {
   opacity: 0.5;
 }
-.tasks-wrapper{
-  display: flex;
-  flex-direction: row;
-  justify-content: space-around;
-  flex-wrap: wrap;
-}
-.universalInput{
-  display: flex;
- flex-direction: row;
-  justify-content: center;
-}
-.red{
-  border-color: red;
-}
+*/
