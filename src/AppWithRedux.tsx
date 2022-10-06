@@ -29,7 +29,6 @@ export type TasksStateType = {
 
 
 function AppWithRedux() {
-    console.log("App is called")
     let todolistId1 = v1();
     let todolistId2 = v1();
 
@@ -101,7 +100,7 @@ function AppWithRedux() {
                             let tasksForTodolist = allTodolistTasks;
 
                             return <Grid item key={tl.id}>
-                                <Paper style={{padding: "10px"}}>
+                                <Paper elevation={8} style={{padding: "10px"}}>
                                     <Todolist
                                         id={tl.id}
                                         title={tl.title}
