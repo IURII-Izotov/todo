@@ -4,7 +4,7 @@ const settings ={
     source: "/api/:path*",
     withCredentials:true,
     headers: {
-        "API-KEY": "b9b7089a-50e1-465a-841d-4c21932deda9",
+        "key": "b9b7089a-50e1-465a-841d-4c21932deda9",
         'Access-Control-Allow-Credentials': true,
         'Access-Control-Allow-Origin': '*',
         'Access-Control-Allow-Methods': '*',
