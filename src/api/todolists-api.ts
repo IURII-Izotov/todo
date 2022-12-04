@@ -4,11 +4,7 @@ const settings ={
     source: "/api/:path*",
     withCredentials:true,
     headers: {
-        "key": "b9b7089a-50e1-465a-841d-4c21932deda9",
-        'Access-Control-Allow-Credentials': true,
-        'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Methods': '*',
-        'Access-Control-Allow-Headers': '*'
+        "API-KEY": "b9b7089a-50e1-465a-841d-4c21932deda9",
     }
 }
 export interface ToDoListType {
