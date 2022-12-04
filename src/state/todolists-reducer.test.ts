@@ -1,12 +1,14 @@
 import {
     addTodolistAC,
     changeTodolistFilterAC,
-    changeTodolistTitleAC,
-    removeTodolistAC,
+    changeTodolistTitleAC, FilterValuesType,
+    removeTodolistAC, SetToDoListsAC,
     todolistsReducer
 } from './todolists-reducer';
 import {v1} from 'uuid';
-import {FilterValuesType, TodolistType} from '../App';
+import {TodolistType} from "../AppWithRedux";
+import {tasksReducer} from "./tasks-reducer";
+
 
 let todolistId1: string;
 let todolistId2: string;
@@ -60,3 +62,23 @@ test('correct filter of todolist should be changed', () => {
     expect(endState[1].filter).toBe(newFilter);
 });
 
+test('todolistst should be set to the state', () => {
+    const action = SetToDoListsAC(startState);
+
+    const endState = todolistsReducer([], action);
+
+    expect(endState.length).toBe(2);
+});
+
+test('empty arrays should be added', function() {
+    const action = SetToDoListsAC([
+        {id: '1', title: 'title 1', order: 0, addedDate: ''},
+        {id: '2', title: 'title 2', order: 0, addedDate: ''}
+    ])
+    const endState = tasksReducer({}, action);
+    const keys = Object.keys(endState);
+    expect(keys.length).toBe(2);
+    expect(endState['1']).toStrictEqual([])
+    expect(endState['2']).toStrictEqual([])
+
+});

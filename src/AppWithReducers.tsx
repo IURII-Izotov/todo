@@ -1,6 +1,6 @@
 import React, {useReducer, useState} from 'react';
 import './App.css';
-import {TaskType, ToDoList} from './ToDoList';
+import { ToDoList} from './ToDoList';
 import {v1} from 'uuid';
 import {AddItemForm} from './AddItemForm';
 import {AppBar, Button, Container, Grid, IconButton, Paper, Toolbar, Typography} from '@material-ui/core';
@@ -8,18 +8,13 @@ import {Menu} from '@material-ui/icons';
 import {
     addTodolistAC,
     changeTodolistFilterAC,
-    changeTodolistTitleAC,
+    changeTodolistTitleAC, FilterValuesType,
     removeTodolistAC,
     todolistsReducer
 } from './state/todolists-reducer';
 import {addTaskAC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC, tasksReducer} from './state/tasks-reducer';
+import {TaskPriorities, TaskStatuses, TaskType} from "./api/todolists-api";
 
-export type FilterValuesType = "all" | "active" | "completed";
-export type TodolistType = {
-    id: string
-    title: string
-    filter: FilterValuesType
-}
 
 export type TasksStateType = {
     [key: string]: Array<TaskType>
@@ -37,12 +32,16 @@ function AppWithReducers() {
 
     let [tasks, dispatchToTasks] = useReducer(tasksReducer, {
         [todolistId1]: [
-            {id: v1(), title: "HTML&CSS", isDone: true},
-            {id: v1(), title: "JS", isDone: true}
+            {id: v1(), title: "HTML&CSS", status: TaskStatuses.Completed,
+                description:'',priority:TaskPriorities.Low,startDate:'',deadline:'',todoListId:'',order:0,addedDate:''},
+            {id: v1(), title: "JS", status: TaskStatuses.Completed,
+                description:'',priority:TaskPriorities.Low,startDate:'',deadline:'',todoListId:'',order:0,addedDate:''}
         ],
         [todolistId2]: [
-            {id: v1(), title: "Milk", isDone: true},
-            {id: v1(), title: "React Book", isDone: true}
+            {id: v1(), title: "Milk", status: TaskStatuses.Completed,
+                description:'',priority:TaskPriorities.Low,startDate:'',deadline:'',todoListId:'',order:0,addedDate:''},
+            {id: v1(), title: "React Book", status: TaskStatuses.Completed,
+                description:'',priority:TaskPriorities.Low,startDate:'',deadline:'',todoListId:'',order:0,addedDate:''}
         ]
     });
 
@@ -52,12 +51,21 @@ function AppWithReducers() {
     }
 
     function addTask(title: string, todolistId: string) {
-        const action = addTaskAC(title, todolistId);
-        dispatchToTasks(action);
+        const action = addTaskAC({ title:'juce',
+            todoListId:'todolistId2',
+            status:TaskStatuses.New,
+            priority:0,
+            addedDate:'',
+            id:'id exists',
+            deadline:'',
+            description:'',
+            order:0,
+            startDate:''});
+        dispatchToTasks(action)
     }
 
-    function changeStatus(id: string, isDone: boolean, todolistId: string) {
-        const action = changeTaskStatusAC(id, isDone, todolistId);
+    function changeStatus(id: string, status: TaskStatuses, todolistId: string) {
+        const action = changeTaskStatusAC(id, status, todolistId);
         dispatchToTasks(action);
     }
 
@@ -83,7 +91,7 @@ function AppWithReducers() {
     }
 
     function addTodolist(title: string) {
-        const action = addTodolistAC(title);
+        const action = addTodolistAC(  {id: '1', title: 'title 1', order: 0, addedDate: ''});
         dispatchToTasks(action);
         dispatchToTodolists(action);
     }
@@ -112,10 +120,10 @@ function AppWithReducers() {
                             let tasksForTodolist = allTodolistTasks;
 
                             if (tl.filter === "active") {
-                                tasksForTodolist = allTodolistTasks.filter(t => t.isDone === false);
+                                tasksForTodolist = allTodolistTasks.filter(t => t.status === TaskStatuses.New);
                             }
                             if (tl.filter === "completed") {
-                                tasksForTodolist = allTodolistTasks.filter(t => t.isDone === true);
+                                tasksForTodolist = allTodolistTasks.filter(t => TaskStatuses.Completed);
                             }
 
                             return <Grid item>
