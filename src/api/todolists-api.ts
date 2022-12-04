@@ -1,6 +1,7 @@
 import axios from "axios";
 import set = Reflect.set;
 const settings ={
+    source: "/api/:path*",
     withCredentials:true,
     headers: {
         "API-KEY": "b9b7089a-50e1-465a-841d-4c21932deda9",
