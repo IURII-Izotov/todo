@@ -6,7 +6,7 @@ import {
     todolistsReducer
 } from './todolists-reducer';
 import {v1} from 'uuid';
-import {TodolistType} from "../AppWithRedux";
+import {TodolistType} from "../../app/App";
 import {tasksReducer} from "./tasks-reducer";
 
 
@@ -33,7 +33,7 @@ test('correct todolist should be removed', () => {
 test('correct todolist should be added', () => {
     let newTodolistTitle = "New ToDoList";
 
-    const endState = todolistsReducer(startState, addTodolistAC(newTodolistTitle))
+    const endState = todolistsReducer(startState, addTodolistAC({id:'212',addedDate:'',title:newTodolistTitle,order:0}))
 
     expect(endState.length).toBe(3);
     expect(endState[0].title).toBe(newTodolistTitle);

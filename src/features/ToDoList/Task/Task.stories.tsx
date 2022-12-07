@@ -3,7 +3,7 @@ import {action} from "@storybook/addon-actions";
 import {Task} from "./Task";
 import React from "react";
 import {v1} from "uuid";
-import {TaskPriorities, TaskStatuses} from "./api/todolists-api";
+import {TaskPriorities, TaskStatuses} from "../../../api/todolists-api";
 
 
 export default {

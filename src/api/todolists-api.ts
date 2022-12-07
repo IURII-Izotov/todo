@@ -1,11 +1,6 @@
 import axios from "axios";
 
-const settings ={
-    withCredentials:true,
-    headers: {
-        "API-KEY": "b9b7089a-50e1-465a-841d-4c21932deda9",
-    }
-}
+//Types
 export interface ToDoListType {
     id:string,
     title:string,
@@ -16,6 +11,11 @@ interface ResponseType<D={}> {
     resultCode: number
     messages: [],
     data: D
+}
+interface getTasksResponseType {
+    items:TaskType[],
+    totalCount:number,
+    error:null|string
 }
 
 export enum TaskStatuses{
@@ -43,14 +43,23 @@ export type TaskType={
     order: number
     addedDate: string
 }
-
-
-interface getTasksResponseType {
-    items:TaskType[],
-    totalCount:number,
-    error:null|string
+export type UpdateTaskModelType={
+    title: string,
+    description: string,
+    status: TaskStatuses,
+    priority: TaskPriorities,
+    startDate: string,
+    deadline: string,
 }
 
+
+//API
+const settings ={
+    withCredentials:true,
+    headers: {
+        "API-KEY": "b9b7089a-50e1-465a-841d-4c21932deda9",
+    }
+}
 const instance=axios.create({
     baseURL:'https://social-network.samuraijs.com/api/1.1/',
     ...settings
