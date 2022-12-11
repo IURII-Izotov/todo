@@ -5,6 +5,7 @@
   "dependencies": {
     "@material-ui/core": "^4.10.1",
     "@material-ui/icons": "^4.9.1",
+    "@material-ui/lab": "^4.0.0-alpha.61",
     "@storybook/addon-storyshots-puppeteer": "^6.5.10",
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",

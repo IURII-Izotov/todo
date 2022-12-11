@@ -9,7 +9,7 @@ export interface ToDoListType {
 }
 interface ResponseType<D={}> {
     resultCode: number
-    messages: [],
+    messages: string[],
     data: D
 }
 interface getTasksResponseType {
